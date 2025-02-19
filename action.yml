@@ -1,0 +1,44 @@
+name: RAScript Action
+description: Compiles RAScript for RetroAchievements development and can perform an audit on the code.
+author: joshraphael
+
+inputs:
+  game-id:
+    description: "RetroAchievements game id"
+    required: true
+  rascript:
+    description: "The RAScript to compile"
+    required: true
+  audit:
+    description: "The RAScript to compile"
+    type: boolean
+    required: false
+
+branding:
+  color: blue
+  icon: award
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set Environment
+      id: env
+      shell: bash
+      run: |
+        echo "RATOOLS_VERSION=v1.15.0" >> "${GITHUB_OUTPUT}"
+        echo "RATOOLS_DIR=~/Installs/RATools-v1.15.0" >> "${GITHUB_OUTPUT}"
+        echo "RALIBRETRO_DIR=~/Installs/RALibretro-x64" >> "${GITHUB_OUTPUT}"
+        echo "DOTNET_ROOT_X64=C:\\Programs\\dotnet" >> "${GITHUB_OUTPUT}"
+        echo "DOTNET_ROOT=C:\\Programs\\dotnet" >> "${GITHUB_OUTPUT}"
+        echo "WINEPATH=C:\\Programs\\dotnet" >> "${GITHUB_OUTPUT}"
+
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Install Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '^1.23.0'
+
+    - name: Create folders
+      run: mkdir -p ${{ steps.env.outputs.RATOOLS_DIR }} && mkdir -p ${{ steps.env.outputs.RALIBRETRO_DIR }}/RACache/Data
