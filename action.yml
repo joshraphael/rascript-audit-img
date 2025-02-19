@@ -1,17 +1,23 @@
-name: RAScript Action
-description: Compiles RAScript for RetroAchievements development and can perform an audit on the code.
+name: RAScript Audit
+description: Compiles RAScript for RetroAchievements development and performs an audit on the code.
 author: joshraphael
 
 inputs:
   game-id:
     description: "RetroAchievements game id"
+    type: number
     required: true
   rascript:
     description: "The RAScript to compile"
+    type: string
     required: true
-  audit:
-    description: "The RAScript to compile"
+  report:
+    description: "Create a report of the audit"
     type: boolean
+    required: false
+  severity:
+    description: "Level of severity to fail on"
+    type: choice
     required: false
 
 branding:
