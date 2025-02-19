@@ -30,15 +30,16 @@ runs:
     - name: Set Environment
       env:
         RATOOLS: v1.15.0
+        DOTNET_DIR: C:\\Programs\\dotnet
       id: env
       shell: bash
       run: |
         echo "RATOOLS_VERSION=${{env.RATOOLS}}" >> "${GITHUB_OUTPUT}"
         echo "RATOOLS_DIR=~/Installs/RATools-${{env.RATOOLS}}" >> "${GITHUB_OUTPUT}"
         echo "RALIBRETRO_DIR=~/Installs/RALibretro-x64" >> "${GITHUB_OUTPUT}"
-        echo "DOTNET_ROOT_X64=C:\\Programs\\dotnet" >> "${GITHUB_OUTPUT}"
-        echo "DOTNET_ROOT=C:\\Programs\\dotnet" >> "${GITHUB_OUTPUT}"
-        echo "WINEPATH=C:\\Programs\\dotnet" >> "${GITHUB_OUTPUT}"
+        echo "DOTNET_ROOT_X64=${{env.DOTNET_DIR}}" >> "${GITHUB_OUTPUT}"
+        echo "DOTNET_ROOT=${{env.DOTNET_DIR}}" >> "${GITHUB_OUTPUT}"
+        echo "WINEPATH=${{env.DOTNET_DIR}}" >> "${GITHUB_OUTPUT}"
 
     - name: Checkout repo
       uses: actions/checkout@v4
@@ -48,11 +49,11 @@ runs:
       with:
         go-version: '^1.23.0'
 
-    - name: Create folders
+    - name: Create Folders
       shell: bash
       run: mkdir -p ${{ steps.env.outputs.RATOOLS_DIR }} && mkdir -p ${{ steps.env.outputs.RALIBRETRO_DIR }}/RACache/Data
 
-    - name: Install wine
+    - name: Install Wine
       shell: bash
       run: sudo apt-get update && sudo apt-get install -y wine
 
