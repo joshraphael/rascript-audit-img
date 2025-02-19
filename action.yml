@@ -53,16 +53,21 @@ runs:
       run: mkdir -p ${{ steps.env.outputs.RATOOLS_DIR }} && mkdir -p ${{ steps.env.outputs.RALIBRETRO_DIR }}/RACache/Data
 
     - name: Install wine
+      shell: bash
       run: sudo apt-get update && sudo apt-get install -y wine
 
     - name: Set Winecfg
+      shell: bash
       run: winecfg /v win10
 
     - name: Get RATools CLI
+      shell: bash
       run: wget -O ${{ steps.env.outputs.RATOOLS_DIR }}/RATools-${{ steps.env.outputs.RATOOLS_VERSION }}.zip "https://github.com/Jamiras/RATools/releases/download/${{ steps.env.outputs.RATOOLS_VERSION }}/RATools-${{ steps.env.outputs.RATOOLS_VERSION }}.zip"
 
     - name: Unpack RATools
+      shell: bash
       run: unzip ${{ steps.env.outputs.RATOOLS_DIR }}/RATools-${{ steps.env.outputs.RATOOLS_VERSION }}.zip -d ${{ steps.env.outputs.RATOOLS_DIR }}
 
     - name: Get .NET SDK 6.0.428
+      shell: bash
       run: bash .github/dotnet-sdk.sh
