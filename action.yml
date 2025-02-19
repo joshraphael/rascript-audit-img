@@ -78,3 +78,10 @@ runs:
         mkdir -p ${HOME}/${INSTALL_DIR}
         wget -O "${HOME}/${INSTALL_DIR}/dotnet-sdk.zip" "https://download.visualstudio.microsoft.com/download/pr/5b2c6cee-abe2-4734-a099-729a346205e7/b5776361ebee2e1eeed9be4aad944652/dotnet-sdk-6.0.428-win-x64.zip"
         unzip "${HOME}/${INSTALL_DIR}/dotnet-sdk.zip" -d "${HOME}/${INSTALL_DIR}"
+
+    - name: Get Code Notes
+      id: code-notes
+      env:
+        GAME_ID: ${{ inputs.game-id }}
+      shell: bash
+      run: cd scripts/ && go get -t ./... && go run main.go > ${{ steps.env.outputs.RALIBRETRO_DIR }}/RACache/Data/${GAME_ID}-Notes.json
