@@ -69,5 +69,6 @@ runs:
       run: unzip ${{ steps.env.outputs.RATOOLS_DIR }}/RATools-${{ steps.env.outputs.RATOOLS_VERSION }}.zip -d ${{ steps.env.outputs.RATOOLS_DIR }}
 
     - name: Get .NET SDK 6.0.428
+      id: dotnet-sdk
       shell: bash
-      run: bash dotnet-sdk.sh
+      run: dotnet-sdk.sh
