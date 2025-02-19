@@ -71,4 +71,4 @@ runs:
     - name: Get .NET SDK 6.0.428
       id: dotnet-sdk
       shell: bash
-      run: dotnet-sdk.sh
+      run: ./dotnet-sdk.sh
