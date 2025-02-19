@@ -85,3 +85,37 @@ runs:
         GAME_ID: ${{ inputs.game-id }}
       shell: bash
       run: cd ${{ github.action_path }}/scripts/ && go get -t ./... && go run main.go > ${{ steps.env.outputs.RALIBRETRO_DIR }}/RACache/Data/${GAME_ID}-Notes.json
+
+    - name: Compile RAScript
+      id: compile-rascript
+      env:
+        GAME_ID: ${{ inputs.game-id }}
+      shell: bash
+      run: touch ${{ steps.env.outputs.RALIBRETRO_DIR }}/RACache/Data/${GAME_ID}.json && wine ${{ steps.env.outputs.RATOOLS_DIR }}/rascript-cli.exe -i ${GAME_ID}.rascript -o ${{ steps.env.outputs.RALIBRETRO_DIR }}
+
+    - name: Upload Code Notes
+      id: upload-notes-json
+      env:
+        GAME_ID: ${{ inputs.game-id }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: notes-json
+        path: ${{ steps.env.outputs.RALIBRETRO_DIR }}/RACache/Data/${GAME_ID}-Notes.json
+      
+    - name: Upload Achievement and Leaderboard Code
+      id: upload-user-text
+      env:
+        GAME_ID: ${{ inputs.game-id }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: user-text
+        path: ${{ steps.env.outputs.RALIBRETRO_DIR }}/RACache/Data/${GAME_ID}-User.txt
+      
+    - name: Upload Rich Presence
+      id: upload-rich-text
+      env:
+        GAME_ID: ${{ inputs.game-id }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: rich-text
+        path: ${{ steps.env.outputs.RALIBRETRO_DIR }}/RACache/Data/${GAME_ID}-Rich.txt
