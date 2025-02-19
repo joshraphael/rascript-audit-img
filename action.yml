@@ -70,4 +70,4 @@ runs:
 
     - name: Get .NET SDK 6.0.428
       shell: bash
-      run: bash .github/dotnet-sdk.sh
+      run: bash dotnet-sdk.sh
