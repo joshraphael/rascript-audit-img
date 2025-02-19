@@ -28,11 +28,13 @@ runs:
   using: "composite"
   steps:
     - name: Set Environment
+      env:
+        RATOOLS: v1.15.0
       id: env
       shell: bash
       run: |
-        echo "RATOOLS_VERSION=v1.15.0" >> "${GITHUB_OUTPUT}"
-        echo "RATOOLS_DIR=~/Installs/RATools-v1.15.0" >> "${GITHUB_OUTPUT}"
+        echo "RATOOLS_VERSION=${{env.RATOOLS}}" >> "${GITHUB_OUTPUT}"
+        echo "RATOOLS_DIR=~/Installs/RATools-${{env.RATOOLS}}" >> "${GITHUB_OUTPUT}"
         echo "RALIBRETRO_DIR=~/Installs/RALibretro-x64" >> "${GITHUB_OUTPUT}"
         echo "DOTNET_ROOT_X64=C:\\Programs\\dotnet" >> "${GITHUB_OUTPUT}"
         echo "DOTNET_ROOT=C:\\Programs\\dotnet" >> "${GITHUB_OUTPUT}"
@@ -49,3 +51,18 @@ runs:
     - name: Create folders
       shell: bash
       run: mkdir -p ${{ steps.env.outputs.RATOOLS_DIR }} && mkdir -p ${{ steps.env.outputs.RALIBRETRO_DIR }}/RACache/Data
+
+    - name: Install wine
+      run: sudo apt-get update && sudo apt-get install -y wine
+
+    - name: Set Winecfg
+      run: winecfg /v win10
+
+    - name: Get RATools CLI
+      run: wget -O ${{ steps.env.outputs.RATOOLS_DIR }}/RATools-${{ steps.env.outputs.RATOOLS_VERSION }}.zip "https://github.com/Jamiras/RATools/releases/download/${{ steps.env.outputs.RATOOLS_VERSION }}/RATools-${{ steps.env.outputs.RATOOLS_VERSION }}.zip"
+
+    - name: Unpack RATools
+      run: unzip ${{ steps.env.outputs.RATOOLS_DIR }}/RATools-${{ steps.env.outputs.RATOOLS_VERSION }}.zip -d ${{ steps.env.outputs.RATOOLS_DIR }}
+
+    - name: Get .NET SDK 6.0.428
+      run: bash .github/dotnet-sdk.sh
