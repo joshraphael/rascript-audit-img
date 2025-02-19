@@ -90,6 +90,9 @@ runs:
       id: compile-rascript
       env:
         GAME_ID: ${{ inputs.game-id }}
+        DOTNET_ROOT_X64: ${{ steps.env.outputs.DOTNET_ROOT_X64 }}
+        DOTNET_ROOT: ${{ steps.env.outputs.DOTNET_ROOT }}
+        WINEPATH: ${{ steps.env.outputs.WINEPATH }}
       shell: bash
       run: touch ${{ steps.env.outputs.RALIBRETRO_DIR }}/RACache/Data/${GAME_ID}.json && wine ${{ steps.env.outputs.RATOOLS_DIR }}/rascript-cli.exe -i ${GAME_ID}.rascript -o ${{ steps.env.outputs.RALIBRETRO_DIR }}
 
