@@ -47,4 +47,5 @@ runs:
         go-version: '^1.23.0'
 
     - name: Create folders
+      shell: bash
       run: mkdir -p ${{ steps.env.outputs.RATOOLS_DIR }} && mkdir -p ${{ steps.env.outputs.RALIBRETRO_DIR }}/RACache/Data
