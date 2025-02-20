@@ -145,4 +145,4 @@ runs:
 
     - name: Run AutoCR
       shell: bash
-      run: ./index.js --notes ${{ inputs.game-id }}-Notes.json --user ${{ inputs.game-id }}-User.txt --rich ${{ inputs.game-id }}-Rich.txt --severity error ${{ inputs.report == 'true' && '--report' || '' }}
+      run: ./index.js --notes ${{ inputs.game-id }}-Notes.json --user ${{ inputs.game-id }}-User.txt --rich ${{ inputs.game-id }}-Rich.txt${{ inputs.severity != '' && format(' --severity {0}', inputs.severity) || '' }}${{ inputs.report == 'true' && ' --report' || '' }}
