@@ -84,7 +84,7 @@ runs:
       env:
         GAME_ID: ${{ inputs.game-id }}
       shell: bash
-      run: cd ${{ github.action_path }}/scripts/ && go get -t ./... && go run main.go > ${{ steps.env.outputs.RALIBRETRO_DIR }}/RACache/Data/${GAME_ID}-Notes.json
+      run: cd ${{ github.action_path }}/ && go get -t ./... && go run main.go > ${{ steps.env.outputs.RALIBRETRO_DIR }}/RACache/Data/${GAME_ID}-Notes.json
 
     - name: Compile RAScript
       id: compile-rascript
@@ -112,3 +112,32 @@ runs:
       with:
         name: rich-text
         path: ${{ steps.env.outputs.RALIBRETRO_DIR }}/RACache/Data/${{ inputs.game-id }}-Rich.txt
+
+    - name: Use Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+
+    - name: Checkout autocr-cli
+      uses: actions/checkout@v4
+      with:
+        repository: joshraphael/autocr-cli
+        ref: v1.1.5
+
+    - name: Download Code Notes
+      uses: actions/download-artifact@v4
+      with:
+        name: notes-json
+      
+    - name: Download Achievement and Leaderboard Code
+      uses: actions/download-artifact@v4
+      with:
+        name: user-text
+      
+    - name: Download Rich Presence
+      uses: actions/download-artifact@v4
+      with:
+        name: rich-text
+
+    - name: Run AutoCR
+      run: ./index.js --notes ${{ inputs.game-id }}-Notes.json --user ${{ inputs.game-id }}-User.txt --rich ${{ inputs.game-id }}-Rich.txt --severity error --report
