@@ -1,5 +1,5 @@
 name: RAScript Audit
-description: Compiles RAScript for RetroAchievements development and performs an audit on the code.
+description: Compiles an RAScript for RetroAchievements development and performs an audit on the code.
 author: joshraphael
 
 inputs:
@@ -8,7 +8,7 @@ inputs:
     type: number
     required: true
   rascript:
-    description: "The RAScript to compile"
+    description: "The RAScript file name to compile (not including .rascript)"
     type: string
     required: true
   report:
@@ -19,6 +19,10 @@ inputs:
     description: "Level of severity to fail on"
     type: choice
     required: false
+    options: 
+      - info
+      - warn
+      - error
 
 branding:
   color: blue
@@ -141,4 +145,4 @@ runs:
 
     - name: Run AutoCR
       shell: bash
-      run: ./index.js --notes ${{ inputs.game-id }}-Notes.json --user ${{ inputs.game-id }}-User.txt --rich ${{ inputs.game-id }}-Rich.txt --severity error --report
+      run: ./index.js --notes ${{ inputs.game-id }}-Notes.json --user ${{ inputs.game-id }}-User.txt --rich ${{ inputs.game-id }}-Rich.txt --severity error ${{ --report[inputs.report == 'true'] }}
