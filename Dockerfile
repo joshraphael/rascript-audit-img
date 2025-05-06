@@ -1,16 +1,15 @@
-FROM node:20-alpine
+FROM node:20
 
 # Variables
 ENV GOLANG_VERSION=1.24.2
 ENV RATOOLS_VERSION=v1.15.1
-ENV GAME_ID=4111
+ENV GAME_ID=18190
 
 # CONSTANTS
 ENV DOTNET_DIR=C:\\Programs\\dotnet
+ENV WINEARCH=win64
 ENV APP_DIR=/app
-ENV WINEPREFIX=${APP_DIR}/.wine
-# ENV RATOOLS_DIR=${APP_DIR}/Installs/RATools-${RATOOLS}
-# ENV RALIBRETRO_DIR=${APP_DIR}/Installs/RALibretro-x64
+ENV WINEPREFIX=${APP_DIR}/.wine64
 ENV DOTNET_ROOT_X64=${DOTNET_DIR}
 ENV DOTNET_ROOT=${DOTNET_DIR}
 ENV WINEPATH=${DOTNET_DIR}
@@ -23,24 +22,22 @@ COPY go.mod ${APP_DIR}
 COPY go.sum ${APP_DIR}
 COPY main.go ${APP_DIR}
 COPY entry.sh ${APP_DIR}
+COPY 18190.rascript ${APP_DIR}
 
 # Install Node
-RUN apk update
-RUN apk add wget wine unzip
+RUN apt update
+RUN apt install -y wine wget unzip
 
 # Install Golang
 RUN wget https://go.dev/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz -O ${APP_DIR}/go.tar.gz
 RUN tar -xzvf ${APP_DIR}/go.tar.gz -C /usr/local
 ENV PATH=/usr/local/go/bin:${PATH}
-# RUN mkdir -p ${RATOOLS_DIR} && mkdir -p ${RALIBRETRO_DIR}/RACache/Data
 
 # Config Wine
 RUN winecfg /v win10
 
 # Get RATools
 RUN wget -O ${APP_DIR}/RATools-${RATOOLS_VERSION}.zip "https://github.com/Jamiras/RATools/releases/download/${RATOOLS_VERSION}/RATools-${RATOOLS_VERSION}.zip"
-# RUN wget -O ${RATOOLS_DIR}/RATools-${RATOOLS_VERSION}.zip "https://github.com/Jamiras/RATools/releases/download/${RATOOLS_VERSION}/RATools-${RATOOLS_VERSION}.zip"
-# RUN unzip ${RATOOLS_DIR}/RATools-${RATOOLS_VERSION}.zip -d ${RATOOLS_DIR}
 
 # Get .NET SDK
 RUN mkdir -p ${INSTALL_DIR}
@@ -49,7 +46,5 @@ RUN unzip "${INSTALL_DIR}/dotnet-sdk.zip" -d "${INSTALL_DIR}"
 
 # Cleanup
 RUN rm ${APP_DIR}/go.tar.gz
-# RUN rm ${RATOOLS_DIR}/RATools-${RATOOLS_VERSION}.zip
 RUN rm ${INSTALL_DIR}/dotnet-sdk.zip
-RUN apk del --purge wget unzip
-# RUN cd $HOME && go get -t ./... && go run main.go > ${RALIBRETRO_DIR}/RACache/Data/${GAME_ID}-Notes.json
+RUN apt purge wget unzip
