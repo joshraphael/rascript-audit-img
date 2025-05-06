@@ -1,0 +1,19 @@
+name: Publish latest rascript-audit
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  publish-latest:
+
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+
+    uses: ./.github/workflows/reusable-publish.yaml
+    with:
+        tag: latest

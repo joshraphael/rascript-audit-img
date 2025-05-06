@@ -1,4 +1,4 @@
-name: Create and publish a Docker image
+name: Publish rascript-audit from feature branch
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
       - '!main'
 
 jobs:
-  build-and-push-image:
+  publish-branch:
 
     permissions:
       contents: read
