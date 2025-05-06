@@ -23,7 +23,7 @@ COPY go.mod ${APP_DIR}
 COPY go.sum ${APP_DIR}
 COPY main.go ${APP_DIR}
 COPY entry.sh ${APP_DIR}
-COPY 18190.rascript ${APP_DIR}
+# COPY 18190.rascript ${APP_DIR}
 
 # Install Node
 RUN apt update
