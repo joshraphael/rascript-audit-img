@@ -10,4 +10,4 @@ jobs:
   build-and-push-image:
     uses: ./.github/workflows/reusable-publish.yaml
     with:
-        tag: ${{ GITHUB_SHA }}
+        tag: ${{ github.sha }}
