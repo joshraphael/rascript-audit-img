@@ -47,4 +47,4 @@ RUN unzip "${INSTALL_DIR}/dotnet-sdk.zip" -d "${INSTALL_DIR}"
 # Cleanup
 RUN rm ${APP_DIR}/go.tar.gz
 RUN rm ${INSTALL_DIR}/dotnet-sdk.zip
-RUN apt purge wget unzip
+RUN apt purge -y wget unzip
