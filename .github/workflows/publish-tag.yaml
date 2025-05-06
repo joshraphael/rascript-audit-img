@@ -16,4 +16,4 @@ jobs:
 
     uses: ./.github/workflows/reusable-publish.yaml
     with:
-        tag: ${{  github.ref_name }}
+        tag: ${{ github.ref_name }}

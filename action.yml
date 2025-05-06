@@ -79,9 +79,9 @@ runs:
         INSTALL_DIR: .wine/drive_c/Programs/dotnet
       shell: bash
       run: |
-        mkdir -p ${HOME}/${INSTALL_DIR}
-        wget -O "${HOME}/${INSTALL_DIR}/dotnet-sdk.zip" "https://download.visualstudio.microsoft.com/download/pr/5b2c6cee-abe2-4734-a099-729a346205e7/b5776361ebee2e1eeed9be4aad944652/dotnet-sdk-6.0.428-win-x64.zip"
-        unzip "${HOME}/${INSTALL_DIR}/dotnet-sdk.zip" -d "${HOME}/${INSTALL_DIR}"
+        mkdir -p ${APP_DIR}/${INSTALL_DIR}
+        wget -O "${APP_DIR}/${INSTALL_DIR}/dotnet-sdk.zip" "https://download.visualstudio.microsoft.com/download/pr/5b2c6cee-abe2-4734-a099-729a346205e7/b5776361ebee2e1eeed9be4aad944652/dotnet-sdk-6.0.428-win-x64.zip"
+        unzip "${APP_DIR}/${INSTALL_DIR}/dotnet-sdk.zip" -d "${APP_DIR}/${INSTALL_DIR}"
 
     - name: Get Code Notes
       id: code-notes
