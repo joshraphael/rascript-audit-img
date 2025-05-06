@@ -1,0 +1,19 @@
+name: Publish rascript-audit from tag
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  publish-tag:
+
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+
+    uses: ./.github/workflows/reusable-publish.yaml
+    with:
+        tag: ${{  github.ref_name }}

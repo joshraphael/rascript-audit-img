@@ -1,0 +1,20 @@
+name: Publish rascript-audit from feature branch
+
+on:
+  push:
+    branches:
+      - '*'
+      - '!main'
+
+jobs:
+  publish-branch:
+
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+
+    uses: ./.github/workflows/reusable-publish.yaml
+    with:
+        tag: ${{ github.sha }}
