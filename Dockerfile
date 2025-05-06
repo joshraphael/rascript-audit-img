@@ -3,6 +3,7 @@ FROM node:20
 # Variables
 ENV GOLANG_VERSION=1.24.2
 ENV RATOOLS_VERSION=v1.15.1
+ENV AUTOCRCLI_VERSION=1.2.2
 ENV GAME_ID=18190
 
 # CONSTANTS
@@ -22,7 +23,7 @@ COPY go.mod ${APP_DIR}
 COPY go.sum ${APP_DIR}
 COPY main.go ${APP_DIR}
 COPY entry.sh ${APP_DIR}
-# COPY 18190.rascript ${APP_DIR}
+COPY 18190.rascript ${APP_DIR}
 
 # Install Node
 RUN apt update
@@ -36,6 +37,9 @@ ENV PATH=/usr/local/go/bin:${PATH}
 # Config Wine
 RUN winecfg /v win10
 
+# Get AutoCR CLI
+RUN wget -O ${APP_DIR}/autocr-cli-${AUTOCRCLI_VERSION}.zip "https://github.com/joshraphael/autocr-cli/archive/refs/tags/v${AUTOCRCLI_VERSION}.zip"
+
 # Get RATools
 RUN wget -O ${APP_DIR}/RATools-${RATOOLS_VERSION}.zip "https://github.com/Jamiras/RATools/releases/download/${RATOOLS_VERSION}/RATools-${RATOOLS_VERSION}.zip"
 
@@ -47,4 +51,4 @@ RUN unzip "${INSTALL_DIR}/dotnet-sdk.zip" -d "${INSTALL_DIR}"
 # Cleanup
 RUN rm ${APP_DIR}/go.tar.gz
 RUN rm ${INSTALL_DIR}/dotnet-sdk.zip
-RUN apt purge -y wget unzip
+RUN apt purge -y wget
