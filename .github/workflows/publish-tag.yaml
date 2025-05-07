@@ -1,4 +1,4 @@
-name: Publish rascript-audit from tag
+name: Publish rascript-audit-img from tag
 
 on:
   push:
