@@ -18,8 +18,8 @@ mkdir -p ${CODENOTES_DIR}
 mv ${APP_DIR}/go.mod ${CODENOTES_DIR}
 mv ${APP_DIR}/go.sum ${CODENOTES_DIR}
 mv ${APP_DIR}/main.go ${CODENOTES_DIR}
-mv ${APP_DIR}/autocr-cli-${AUTOCRCLI_VERSION}.zip ${HOMCONTAINER_HOMEE}
-mv ${APP_DIR}/RATools-${RATOOLS_VERSION}.zip ${HOMCONTAINER_HOMEE}
+mv ${APP_DIR}/autocr-cli-${AUTOCRCLI_VERSION}.zip ${CONTAINER_HOME}
+mv ${APP_DIR}/RATools-${RATOOLS_VERSION}.zip ${CONTAINER_HOME}
 # mv ${APP_DIR}/${GAME_ID}.rascript ${HOME}
 touch ${RA_DATA_DIR}/${GAME_ID}.json
 
