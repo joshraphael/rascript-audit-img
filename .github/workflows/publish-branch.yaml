@@ -1,4 +1,4 @@
-name: Publish rascript-audit from feature branch
+name: Publish rascript-audit-img from feature branch
 
 on:
   push:

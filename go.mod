@@ -1,4 +1,4 @@
-module github.com/joshraphael/rascript-audit
+module github.com/joshraphael/rascript-audit-img
 
 go 1.23.0
 

@@ -1,4 +1,4 @@
-name: Publish rascript-audit from tag
+name: Publish rascript-audit-img from tag
 
 on:
   push:
@@ -16,4 +16,4 @@ jobs:
 
     uses: ./.github/workflows/reusable-publish.yaml
     with:
-        tag: ${{  github.ref_name }}
+        tag: ${{ github.ref_name }}

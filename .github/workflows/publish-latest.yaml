@@ -1,4 +1,4 @@
-name: Publish latest rascript-audit
+name: Publish latest rascript-audit-img
 
 on:
   push:
