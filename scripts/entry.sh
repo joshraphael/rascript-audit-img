@@ -10,6 +10,25 @@ if [ -z "${RASCRIPT_FILE}" ]; then
   exit 1
 fi
 
+if [ -z "${REPORT}" ]; then
+  echo "REPORT env var is not set"
+  exit 1
+fi
+
+SEVERITY_TXT=""
+levels=("info" "warn" "error")
+if [ ! -z "${SEVERITY}" ]; then
+  if [[ ${levels[@]} =~ ${SEVERITY} ]]; then
+    SEVERITY_TXT=" --severity ${SEVERITY}"
+  fi
+fi
+
+REPORT_STR=""
+true=("true" "TRUE" "True")
+if [[ ${true[@]} =~ ${REPORT} ]]; then
+  REPORT_STR=" --report"
+fi
+
 export RATOOLS_DIR=${HOME}/Installs/RATools-${RATOOLS_VERSION}
 export RALIBRETRO_DIR=${HOME}/Installs/RALibretro-x64
 export RA_DATA_DIR=${RALIBRETRO_DIR}/RACache/Data
@@ -37,4 +56,6 @@ cd ${CODENOTES_DIR} && go get -t ./... && go run main.go > ${RA_DATA_DIR}/${GAME
 cp "/app/rascript/${RASCRIPT_FILE}" ${HOME}/${GAME_ID}.rascript
 echo ${HOME} > /app/home.txt
 wine ${RATOOLS_DIR}/rascript-cli.exe -i ${HOME}/${GAME_ID}.rascript -o ${RALIBRETRO_DIR}
-node ${HOME}/autocr-cli-${AUTOCRCLI_VERSION}/index.js --notes ${RA_DATA_DIR}/${GAME_ID}-Notes.json --user ${RA_DATA_DIR}/${GAME_ID}-User.txt --rich ${RA_DATA_DIR}/${GAME_ID}-Rich.txt --report --severity warn | tee ${RA_DATA_DIR}/${GAME_ID}-Report.txt
+set -o pipefail
+node ${HOME}/autocr-cli-${AUTOCRCLI_VERSION}/index.js --notes ${RA_DATA_DIR}/${GAME_ID}-Notes.json --user ${RA_DATA_DIR}/${GAME_ID}-User.txt --rich ${RA_DATA_DIR}/${GAME_ID}-Rich.txt${REPORT_STR}${SEVERITY_TXT} | tee ${RA_DATA_DIR}/${GAME_ID}-Report.txt
+exit $?
