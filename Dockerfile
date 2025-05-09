@@ -4,7 +4,6 @@ FROM node:20
 ENV GOLANG_VERSION=1.24.2
 ENV RATOOLS_VERSION=v1.15.1
 ENV AUTOCRCLI_VERSION=1.2.2
-ENV GAME_ID=18190
 
 # CONSTANTS
 ENV DOTNET_DIR=C:\\Programs\\dotnet
@@ -18,12 +17,12 @@ ENV INSTALL_DIR=${WINEPREFIX}/drive_c/Programs/dotnet
 
 RUN mkdir -p ${APP_DIR}
 
-# Only copy the go script to get code notes
+# Only copy the bash and go script to get code notes
 COPY go.mod ${APP_DIR}
 COPY go.sum ${APP_DIR}
 COPY main.go ${APP_DIR}
-COPY entry.sh ${APP_DIR}
-# COPY 18190.rascript ${APP_DIR}
+COPY scripts/entry.sh ${APP_DIR}
+COPY scripts/copy.sh ${APP_DIR}
 
 # Install Node
 RUN apt update
@@ -52,3 +51,7 @@ RUN unzip "${INSTALL_DIR}/dotnet-sdk.zip" -d "${INSTALL_DIR}"
 RUN rm ${APP_DIR}/go.tar.gz
 RUN rm ${INSTALL_DIR}/dotnet-sdk.zip
 RUN apt purge -y wget
+
+RUN chmod -R 777 /app
+
+ENTRYPOINT ["/app/entry.sh"]

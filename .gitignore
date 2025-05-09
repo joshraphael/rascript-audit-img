@@ -1,1 +1,2 @@
-*.rascript
+tmp/
+container_home/
