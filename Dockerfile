@@ -54,4 +54,4 @@ RUN apt purge -y wget
 
 RUN chmod -R 777 /app
 
-ENTRYPOINT ["/app/entry.sh"]
+# ENTRYPOINT ["/app/entry.sh"]
