@@ -38,9 +38,13 @@ RUN winecfg /v win10
 
 # Get AutoCR CLI
 RUN wget -O ${APP_DIR}/autocr-cli-${AUTOCRCLI_VERSION}.zip "https://github.com/joshraphael/autocr-cli/archive/refs/tags/v${AUTOCRCLI_VERSION}.zip"
+RUN unzip ${APP_DIR}/autocr-cli-${AUTOCRCLI_VERSION}.zip -d ${APP_DIR}/autocr-cli-${AUTOCRCLI_VERSION}
+RUN rm -rf ${APP_DIR}/autocr-cli-${AUTOCRCLI_VERSION}.zip
 
 # Get RATools
 RUN wget -O ${APP_DIR}/RATools-${RATOOLS_VERSION}.zip "https://github.com/Jamiras/RATools/releases/download/${RATOOLS_VERSION}/RATools-${RATOOLS_VERSION}.zip"
+RUN unzip ${APP_DIR}/RATools-${RATOOLS_VERSION}.zip -d ${APP_DIR}/RATools-${RATOOLS_VERSION}
+RUN rm -rf ${APP_DIR}/RATools-${RATOOLS_VERSION}.zip
 
 # Get .NET SDK
 RUN mkdir -p ${INSTALL_DIR}
@@ -53,5 +57,3 @@ RUN rm ${INSTALL_DIR}/dotnet-sdk.zip
 RUN apt purge -y wget
 
 RUN chmod -R 777 /app
-
-ENTRYPOINT ["/app/entry.sh"]
