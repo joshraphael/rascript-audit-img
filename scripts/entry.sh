@@ -45,15 +45,14 @@ mv ${APP_DIR}/go.mod ${CODENOTES_DIR}
 mv ${APP_DIR}/go.sum ${CODENOTES_DIR}
 mv ${APP_DIR}/main.go ${CODENOTES_DIR}
 mv ${APP_DIR}/autocr-cli-${AUTOCRCLI_VERSION}/autocr-cli-${AUTOCRCLI_VERSION} ${INSTALLS_DIR}
-mv ${APP_DIR}/RATools-${RATOOLS_VERSION} ${INSTALLS_DIR}
+mv ${APP_DIR}/rascript-cli_v1.15.1_linux-x64 ${INSTALLS_DIR}
 touch ${RA_DATA_DIR}/${GAME_ID}.json
 rm -rf mv ${APP_DIR}/autocr-cli-${AUTOCRCLI_VERSION}
-rm -rf ${APP_DIR}/RATools-${RATOOLS_VERSION}
 
 cd ${CODENOTES_DIR} && go get -t ./... && go run main.go > ${RA_DATA_DIR}/${GAME_ID}-Notes.json
 cp "/app/rascript/${RASCRIPT_FILE}" ${HOME}/${GAME_ID}.rascript
 echo ${HOME} > /app/home.txt
-wine ${RATOOLS_DIR}/rascript-cli.exe -i ${HOME}/${GAME_ID}.rascript -o ${RALIBRETRO_DIR}
+${INSTALLS_DIR}/rascript-cli_v1.15.1_linux-x64 -i ${HOME}/${GAME_ID}.rascript -o ${RALIBRETRO_DIR}
 set -o pipefail
 node ${INSTALLS_DIR}/autocr-cli-${AUTOCRCLI_VERSION}/index.js --notes ${RA_DATA_DIR}/${GAME_ID}-Notes.json --user ${RA_DATA_DIR}/${GAME_ID}-User.txt --rich ${RA_DATA_DIR}/${GAME_ID}-Rich.txt${REPORT_STR}${SEVERITY_TXT} | tee ${RA_DATA_DIR}/${GAME_ID}-Report.txt
 exit $?
